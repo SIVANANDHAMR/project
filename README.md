@@ -1,35 +1,56 @@
 # OCR Image Processor
 
-This project provides a simple Python script that opens an image file dialog, runs OCR with Tesseract, and highlights detected text regions on the original image.
+A small Python document-processing utility that preprocesses an image, extracts text with Tesseract OCR, and saves a copy with high-confidence text regions highlighted.
+
+## Features
+
+- Grayscale, blur, and Otsu threshold preprocessing
+- Confidence-aware OCR box highlighting
+- Command-line interface for scripts and automation
+- Optional file chooser for desktop use
+- Testable processing function with explicit return values
 
 ## Requirements
 
 - Python 3.9+
-- Tesseract OCR installed and available on your PATH
+- Tesseract OCR installed and available on `PATH`
 
-## Install dependencies
-
-```bash
-pip install -r requirements.txt
-```
-
-## Install Tesseract OCR
-
-### Ubuntu / Debian
+Install the Python dependencies:
 
 ```bash
-sudo apt update
-sudo apt install -y tesseract-ocr
+python -m pip install -r requirements.txt
 ```
 
-### Windows
+Install Tesseract:
 
-Install Tesseract from the official installer and make sure the `tesseract` executable is added to your PATH.
+- Ubuntu/Debian: `sudo apt update && sudo apt install -y tesseract-ocr`
+- Windows: install Tesseract and add its installation directory to `PATH`
+- macOS: `brew install tesseract`
 
-## Run the script
+## Usage
+
+Process an image from the command line:
+
+```bash
+python OCR.py invoice.png --output output/highlighted.png
+```
+
+If the image path is omitted, a file chooser opens:
 
 ```bash
 python OCR.py
 ```
 
-Select an image file when prompted. The script will print extracted text and save a highlighted output image as `highlighted_output.png`.
+Adjust the minimum OCR confidence when needed:
+
+```bash
+python OCR.py invoice.png --threshold 75
+```
+
+The command prints the extracted text and writes the highlighted image to the requested output path.
+
+## Test
+
+```bash
+python -m unittest discover -s tests -v
+```
